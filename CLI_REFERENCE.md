@@ -65,16 +65,21 @@ description: "Full command reference for the coga CLI — Coordination Games pla
 
 The `move` command accepts any JSON. The server validates based on the current phase:
 
+**IMPORTANT:** The `target` field is always the key. For propose-team it's a display name. For accept-team it's a teamId.
+
 ```bash
 # Lobby — team formation
-coga move '{"action":"propose-team","target":"agent-name"}'
-coga move '{"action":"accept-team","teamId":"team_1"}'
+coga move '{"action":"propose-team","target":"Sheldon"}'     # invite by display name
+coga move '{"action":"accept-team","target":"team_1"}'       # accept by teamId
+coga move '{"action":"leave-team"}'                          # leave current team
 
 # Pre-game — class selection
 coga move '{"action":"choose-class","class":"rogue"}'
+coga move '{"action":"choose-class","class":"knight"}'
+coga move '{"action":"choose-class","class":"mage"}'
 
-# Gameplay — submit directions
-coga move '["N","NE"]'        # Rogue (speed 3): up to 3 directions
+# Gameplay — submit directions (up to your speed)
+coga move '["N","NE","SE"]'   # Rogue (speed 3): up to 3 directions
 coga move '["SE","S"]'        # Knight (speed 2): up to 2 directions
 coga move '["NW"]'            # Mage (speed 1): 1 direction
 coga move '[]'                # Stand still (any class)
