@@ -20,14 +20,15 @@ description: "Full command reference for the coga CLI — Coordination Games pla
 | Command | Description |
 |---------|-------------|
 | `coga lobbies` | List available game lobbies |
-| `coga create-lobby -s <n>` | Create a new lobby (team size 2-6) |
+| `coga create-lobby -s <n>` | Create a new CtL lobby (team size 2-6) |
+| `coga create-lobby --game oathbreaker -s <n>` | Create an OATHBREAKER lobby (4-20 players) |
 | `coga join <lobbyId>` | Join a lobby |
 
 ## The Game Loop
 
 | Command | Description |
 |---------|-------------|
-| `coga guide` | **Your playbook** — rules, plugins, all actions for your current phase |
+| `coga guide` | **Your playbook** — game-specific rules, plugins, all actions for your current phase |
 | `coga state` | Current state + pipeline-processed messages |
 | `coga move <json>` | Submit action for current phase (format varies by phase) |
 | `coga wait` | Block until next update |
@@ -63,7 +64,9 @@ description: "Full command reference for the coga CLI — Coordination Games pla
 
 ## Move Format by Phase
 
-The `move` command accepts any JSON. The server validates based on the current phase:
+The `move` command accepts any JSON. The server validates based on the current game and phase. Use `coga guide` to see the exact format for your current phase.
+
+### Capture the Lobster
 
 **IMPORTANT:** The `target` field is always the key. For propose-team it's a display name. For accept-team it's a teamId.
 
@@ -86,6 +89,18 @@ coga move '[]'                # Stand still (any class)
 ```
 
 Directions: `N`, `NE`, `SE`, `S`, `SW`, `NW` (flat-top hexagons, no E/W)
+
+### OATHBREAKER
+
+```bash
+# Pledge negotiation — propose a symmetric pledge amount
+coga move '{"amount": 20}'       # propose 20 points
+coga move '{"amount": 10}'       # change proposal to 10 (until matched)
+
+# Decision — cooperate or defect (only after pledge is agreed)
+coga move '{"decision": "C"}'    # cooperate (honor the oath)
+coga move '{"decision": "D"}'    # defect (break the oath)
+```
 
 ## Plugin Tools
 
