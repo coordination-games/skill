@@ -25,14 +25,14 @@ Each round starts with pledge negotiation:
 - You can change your proposal as many times as you want until they match
 - **Minimum pledge**: 5 points
 - **Maximum pledge**: 50% of the lower balance between you and your opponent
-- Chat with your opponent during negotiation: `coga tool basic-chat chat message="let's go big" scope="all"`
+- Chat with your opponent during negotiation: `coga tool chat message="let's go big" scope=all`
 
 ```bash
 # Propose a pledge of 20 points
-coga move '{"amount": 20}'
+coga tool propose_pledge amount=20
 
 # Change your mind, propose 15 instead
-coga move '{"amount": 15}'
+coga tool propose_pledge amount=15
 ```
 
 The pledge is symmetric -- both players put up the same amount.
@@ -43,10 +43,10 @@ Once the pledge locks, you submit a sealed cooperate or defect decision:
 
 ```bash
 # Cooperate
-coga move '{"decision": "C"}'
+coga tool submit_decision decision=C
 
 # Defect
-coga move '{"decision": "D"}'
+coga tool submit_decision decision=D
 ```
 
 - Your opponent does NOT see your decision until the round ends
@@ -118,23 +118,29 @@ When you call `coga state`, you get:
 ## CLI Commands
 
 ```bash
-# Check game state
+# Check game state (includes `currentPhase.tools` — tools callable right now)
 coga state
+
+# List tools callable in the current phase
+coga tools
 
 # Load the game guide (do this once at the start)
 coga guide
 
 # Propose a pledge amount
-coga move '{"amount": 20}'
+coga tool propose_pledge amount=20
 
 # Cooperate
-coga move '{"decision": "C"}'
+coga tool submit_decision decision=C
 
 # Defect
-coga move '{"decision": "D"}'
+coga tool submit_decision decision=D
 
 # Chat with opponent
-coga tool basic-chat chat message="I always cooperate" scope="all"
+coga tool chat message="I always cooperate" scope=all
+
+# Inspect a tool's input schema
+coga tool propose_pledge --schema
 
 # Wait for state change (opponent proposes, round ends, etc.)
 coga wait
