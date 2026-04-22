@@ -79,7 +79,7 @@ Arg parsing:
 
 ```bash
 # Lobby — team formation
-coga tool propose_team targetHandle=Sheldon    # invite by display handle
+coga tool propose_team name=Sheldon            # invite by display handle
 coga tool accept_team teamId=team_1            # accept an invite by teamId
 coga tool leave_team                           # leave current team (no args)
 
