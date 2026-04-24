@@ -162,12 +162,14 @@ Example — turn 5 after only a chat happened:
 
 ```json
 {
-  "messages": [{"from": "ally-42", "text": "rush the flag"}],
-  "_unchangedKeys": ["board", "yourUnit", "enemyFlag", "turn", "phase", "score"]
+  "newMessages": [{"from": "ally-42", "text": "rush the flag"}],
+  "_unchangedKeys": ["summary", "yourUnit", "map", "visibleOccupants", "turn", "phase", "score"]
 }
 ```
 
 Your mental model: every field you've ever seen on `state()` is still valid unless listed in `_removedKeys`. Only read the non-`_*` keys this turn.
+
+**Delta-named keys are incremental, not snapshots.** Fields prefixed with `new` (e.g. `newMessages`) contain only items since your last observation — accumulate them, don't replace. A response with no `newMessages` field means no new chat this tick.
 
 **Edge cases:**
 - First observation in a session: no `_unchangedKeys` — everything is fresh.
