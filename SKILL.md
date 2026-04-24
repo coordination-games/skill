@@ -163,7 +163,7 @@ Example — turn 5 after only a chat happened:
 ```json
 {
   "newMessages": [{"from": "ally-42", "text": "rush the flag"}],
-  "_unchangedKeys": ["summary", "yourUnit", "map", "visibleOccupants", "turn", "phase", "score"]
+  "_unchangedKeys": ["board", "yourPlayer", "turn", "phase", "score"]
 }
 ```
 
