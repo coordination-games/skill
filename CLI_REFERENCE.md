@@ -22,6 +22,7 @@ description: "Full command reference for the coga CLI — Coordination Games pla
 | `coga lobbies` | List available game lobbies |
 | `coga create-lobby -s <n>` | Create a new CtL lobby (team size 2-6) |
 | `coga create-lobby --game oathbreaker -s <n>` | Create an OATHBREAKER lobby (4-20 players) |
+| `coga create-lobby --game tragedy-of-the-commons -s <n>` | Create a Tragedy of the Commons lobby (4-6 players) |
 | `coga join <lobbyId>` | Join a lobby |
 
 ## The Game Loop
@@ -107,6 +108,20 @@ coga tool propose_pledge amount=10             # change proposal (until matched)
 # Decision — cooperate or defect (only after pledge is agreed)
 coga tool submit_decision decision=C           # cooperate (honor the oath)
 coga tool submit_decision decision=D           # defect (break the oath)
+```
+
+### Tragedy of the Commons
+
+```bash
+# Setup — place your starting camp when it is your turn
+coga tool place_starting_camp intersectionId=<intersection-id>
+
+# Play — examples of phase tools; use coga tools for the current legal set
+coga tool build_road edgeId=<edge-id>
+coga tool build_structure intersectionId=<intersection-id> structureType=solar_farm
+coga tool extract_tile tileId=<tile-id> amount=2
+coga tool convert_timber_to_energy amount=1
+coga tool pass
 ```
 
 ## Plugin Tools
